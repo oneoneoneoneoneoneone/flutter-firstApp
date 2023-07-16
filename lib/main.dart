@@ -199,6 +199,7 @@ class FavoritesPage extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               child: Text('You have ''${appState.favorites.length} favorites:'),
             ),
+          // ... - 배열안에 단일 요소와 List 사이에 추가
           ...
           appState.favorites.map((pair) => 
             ListTile(
