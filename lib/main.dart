@@ -70,6 +70,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    Widget page;
+    switch (selectedIndex) {
+      case 0:
+        page = GeneratorPage();
+        break;
+      case 1:
+        page = Placeholder();
+        break;
+      default:
+        throw UnimplementedError('no widget for $selectedIndex');
+    }
+
     // Scaffold - 최상위 위젯. build() 메서드가 반환할 위젯 or 위젯 트리
     return Scaffold(
       body: Row(
@@ -103,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
             // Container - ?
             child: Container(
               color: Theme.of(context).colorScheme.primaryContainer,
-              child: GeneratorPage(),
+              child: page,
             ),
           ),
         ],
