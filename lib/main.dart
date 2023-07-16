@@ -57,6 +57,44 @@ class MyAppState extends ChangeNotifier {
 
 class MyHomePage extends StatelessWidget {
   @override
+  Widget build(BuildContext context) {
+    // Scaffold - 최상위 위젯. build() 메서드가 반환할 위젯 or 위젯 트리
+    return Scaffold(
+      body: Row(
+        children: [
+          SafeArea(
+            child: NavigationRail(
+              extended: false,
+              destinations: [
+                NavigationRailDestination(
+                  icon: Icon(Icons.home),
+                  label: Text('Home'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.favorite),
+                  label: Text('Favorites'),
+                ),
+              ],
+              selectedIndex: 0,
+              onDestinationSelected: (value) {
+                print('selected: $value');
+              },
+            ),
+          ),
+          Expanded(
+            child: Container(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              child: GeneratorPage(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class GeneratorPage extends StatelessWidget {
+  @override
   // build() - 위젯이 변경될 때마다 자동 호출되는 메서드
   Widget build(BuildContext context) {
     // watch() - 상태 변경사항 추적
@@ -70,40 +108,35 @@ class MyHomePage extends StatelessWidget {
     } else {
       icon = Icons.favorite_border;
     }
-    
-    // Scaffold - 최상위 위젯. build() 메서드가 반환할 위젯 or 위젯 트리
-    return Scaffold(
-      // Column - 기본적인 레이아웃 위젯
-      body: Center(
-        child: Column(
-          // 기본축 기준 Column 하위 요소 정렬
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            BigCard(pair: pair),
-            // 공간만 차지하고 렌더링X
-            SizedBox(height: 10),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ElevatedButton.icon(
+
+    // Column - 기본적인 레이아웃 위젯
+    return Center(
+      child: Column(
+        // 기본축 기준 Column 하위 요소 정렬
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          BigCard(pair: pair),
+          // 공간만 차지하고 렌더링X
+          SizedBox(height: 10),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ElevatedButton.icon(
                   onPressed: () {
                     appState.toggleFavorite();
                   },
                   icon: Icon(icon),
-                  label: Text('Like')
-                ),
-                SizedBox(width: 10),
-                
-                ElevatedButton(
-                  onPressed: () {
-                    appState.getNext();
-                  },
-                  child: Text('Next'),
-                ),
-              ],
-            ),
-          ],
-        ),
+                  label: Text('Like')),
+              SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: () {
+                  appState.getNext();
+                },
+                child: Text('Next'),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
