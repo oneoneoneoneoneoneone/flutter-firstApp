@@ -8,6 +8,7 @@ void main() {
 }
 
 // StatelessWidget - flutter 앱을 빌드 (앱 = 위젯)
+// Stateless - 변경 가능한 자체 상태를 포함하지 않음. MyAppState를 거쳐야 변경 가능
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -62,8 +63,10 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       body: Row(
         children: [
+          // SafeArea - 하위 요소가 하드웨어 노치나 상태 표시줄로 가려지지 않음
           SafeArea(
             child: NavigationRail(
+              // extended: false - 아이콘 옆에 라벨 표시하지 않음
               extended: false,
               destinations: [
                 NavigationRailDestination(
@@ -76,12 +79,15 @@ class MyHomePage extends StatelessWidget {
                 ),
               ],
               selectedIndex: 0,
+              // onDestinationSelected - NavigationRailDestination을 선택했을 때 동작 정의
               onDestinationSelected: (value) {
                 print('selected: $value');
               },
             ),
           ),
+          // Expanded - 같은 계층의 위젯(NavigationRail)이 필요로 하는 공간 외에 남은 공간을 최대한 차지하는 레이아웃 표현
           Expanded(
+            // Container - ?
             child: Container(
               color: Theme.of(context).colorScheme.primaryContainer,
               child: GeneratorPage(),
