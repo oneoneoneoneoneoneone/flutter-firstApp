@@ -56,7 +56,18 @@ class MyAppState extends ChangeNotifier {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+// StatefulWidget - 상태가 있는 위젯(다른 위젯에서 해당 위젯의 flag 역할의 변수를 참조해야하는 경우?). notifyListeners() 호출 없이 동작
+class MyHomePage extends StatefulWidget {
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+// StatefulWidget으로 Convert하는 경우, _@State: State<@> 클래스를 생성 - State 확장, 자체 값 관리
+// 클래스 명에서 시작 밑줄(_)을 사용하는 경우, 해당 클래스를 비공개로 만들며 컴파일러에 의해 시행됨
+class _MyHomePageState extends State<MyHomePage> {
+  // 추적할 변수
+  var selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     // Scaffold - 최상위 위젯. build() 메서드가 반환할 위젯 or 위젯 트리
@@ -78,10 +89,12 @@ class MyHomePage extends StatelessWidget {
                   label: Text('Favorites'),
                 ),
               ],
-              selectedIndex: 0,
+              selectedIndex: selectedIndex,
               // onDestinationSelected - NavigationRailDestination을 선택했을 때 동작 정의
               onDestinationSelected: (value) {
-                print('selected: $value');
+                setState(() {
+                  selectedIndex = value;
+                });
               },
             ),
           ),
